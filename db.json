@@ -1,0 +1,39 @@
+{
+  "todos": [
+    {
+      "id": "0890x4e1c-8ae3-415a-87a0-b91e35da7f3c",
+      "title": "study react doc",
+      "owner": "soli",
+      "location": "tehran",
+      "completed": false
+    },
+    {
+      "id": "08ddd904e1c-8ae3-415a-87a0-b91e35da7f3c",
+      "title": "yoga",
+      "owner": "fatemeh",
+      "location": "tehran",
+      "completed": false
+    },
+    {
+      "id": "08904e1c-8ae3-415a-87a0-b91e35da7f3a",
+      "title": "take a shower",
+      "owner": "fatemeh",
+      "location": "tehran",
+      "completed": false
+    },
+    {
+      "id": "08904e1c-8ae3-415a-87a0-b91e35da7f3b",
+      "title": "practice coding",
+      "owner": "soli",
+      "location": "tehran",
+      "completed": false
+    },
+    {
+      "id": "08904e1c-8ae3-415a-87a0-b91e35da7f3c",
+      "title": "apply sunscreen",
+      "owner": "fatemeh",
+      "location": "tehran",
+      "completed": false
+    }
+  ]
+}
