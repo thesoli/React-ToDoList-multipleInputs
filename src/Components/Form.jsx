@@ -1,70 +1,84 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-const Form = ({ inputTitle, inputOwner, inputLocation, setInputTitle, setInputOwner, setInputLocation, editTodo, addNewTask, editTask, editId }) => {
+const Form = ({ editTodo, editId, fetchData }) => {
+  const [inputTitle, setInputTitle] = useState("");
+  const [inputOwner, setInputOwner] = useState("");
+  const [inputLocation, setInputLocation] = useState("");
 
-  //title
   useEffect(() => {
     if (editTodo) {
       setInputTitle(editTodo.title);
       setInputOwner(editTodo.owner);
       setInputLocation(editTodo.location);
-      
     } else {
       setInputTitle("");
     }
-  }, [setInputTitle,setInputOwner, editTodo]);
+  }, [setInputTitle, setInputOwner, editTodo]);
 
   const titleChange = (e) => {
     setInputTitle(e.target.value);
   };
 
-
-  //owner
-  // useEffect(() => {
-  //   if (editTodo) {
-  //     setInputTitle(editTodo.title);
-  //     setInputOwner(editTodo.title);
-  //   } else {
-  //     setInputOwner("");
-  //   }
-  // }, [setInputTitle, setInputOwner, editTodo]);
-
   const ownerChange = (e) => {
     setInputOwner(e.target.value);
   };
-
-  //location
-  // useEffect(() => {
-  //   if (editTodo) {
-  //     setInputLocation(editTodo.title);
-  //   } else {
-  //     setInputLocation("");
-  //   }
-  // }, [setInputLocation, editTodo]);
 
   const locationChange = (e) => {
     setInputLocation(e.target.value);
   };
 
-
-
-
   const onFormSubmit = (e) => {
     e.preventDefault();
     if (!editTodo) {
-      addNewTask()
+      addNewTask();
       setInputTitle("");
       setInputOwner("");
       setInputLocation("");
     } else {
-      editTask(editId)
-      
+      editTask(editId);
     }
-     setInputTitle("");
-     setInputOwner("");
-     setInputLocation("");
+    setInputTitle("");
+    setInputOwner("");
+    setInputLocation("");
   };
-  
+
+  const addNewTask = () => {
+    axios
+      .post("http://localhost:8000/todos", {
+        id: uuidv4(),
+        title: inputTitle,
+        owner: inputOwner,
+        location: inputLocation,
+        completed: false,
+      })
+      .then(function (response) {
+        fetchData();
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const editTask = (id) => {
+    axios
+      .put("http://localhost:8000/todos/" + id, {
+        id: id,
+        title: inputTitle,
+        owner: inputOwner,
+        location: inputLocation,
+        completed: false,
+      })
+      .then(function () {
+        fetchData();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <form onSubmit={onFormSubmit}>
       <input
@@ -76,7 +90,7 @@ const Form = ({ inputTitle, inputOwner, inputLocation, setInputTitle, setInputOw
         onChange={titleChange}
       />
 
-<input
+      <input
         type="text"
         placeholder="add an owner..."
         className="task-input"
@@ -85,7 +99,7 @@ const Form = ({ inputTitle, inputOwner, inputLocation, setInputTitle, setInputOw
         onChange={ownerChange}
       />
 
-       <input
+      <input
         type="text"
         placeholder="add a location..."
         className="task-input"
